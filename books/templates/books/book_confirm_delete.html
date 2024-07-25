@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Borrar página{% endblock %}
+{% block content %}
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto">
+        <div class="bg-white p-6 border border-gray-300 rounded-lg shadow-md">
+            <form action="" method="post">{% csrf_token %}
+                <p class="text-lg font-semibold mb-4">¿Estás seguro de que quieres borrar "{{ object.title }}"?</p>
+                <div class="flex space-x-4">
+                    <input type="submit" value="Sí, borrar la página" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"/>
+                    <a href="{% url 'list_book' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

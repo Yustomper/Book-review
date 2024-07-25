@@ -1,0 +1,21 @@
+from django import forms
+from .models import Book, Autor, Category
+
+class BookForm(forms.Form):
+    title = forms.CharField(max_length=200, label='Título', widget=forms.TextInput(attrs={'class': 'w-full border border-black p-2 rounded'}))
+    autor = forms.ModelChoiceField(queryset=Autor.objects.all(), label='Autor', widget=forms.Select(attrs={'class': 'w-full border border-black p-2 rounded'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full border border-black p-2 rounded'}), label='Descripción')
+    image = forms.ImageField(label='Imagen', required=False, widget=forms.ClearableFileInput(attrs={'class': 'w-full border border-black p-2 rounded'}))
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), label='Categoría', widget=forms.Select(attrs={'class': 'w-full border border-black p-2 rounded'}))
+    price = forms.DecimalField(max_digits=6, decimal_places=2, label='Precio', widget=forms.NumberInput(attrs={'class': 'w-full border border-black p-2 rounded'}))  # Nuevo campo para el precio
+
+    def save(self):
+        # Crea un nuevo objeto Book usando los datos validados del formulario
+        return Book.objects.create(
+            title=self.cleaned_data['title'],
+            autor=self.cleaned_data['autor'],
+            description=self.cleaned_data['description'],
+            image=self.cleaned_data.get('image'),  # image puede ser None si no se proporciona
+            category=self.cleaned_data['category'],
+            price=self.cleaned_data['price']  # Añade el valor del campo price
+        )

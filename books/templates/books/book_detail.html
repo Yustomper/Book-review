@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'includes/book_menu.html' %}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">{{ book.title }}</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+            {% if book.image %}
+                <img src="{{ book.image.url }}" alt="{{ book.title }}" class="w-full h-auto object-cover rounded-lg shadow-lg">
+            {% else %}
+                <div class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg">
+                    <span class="text-gray-500">No image available</span>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <p class="text-xl mb-2"><strong>Autor:</strong> {{ book.autor }}</p>
+            <p class="text-lg mb-2"><strong>Precio:</strong> ${{ book.price }}</p>
+            <p class="text-lg mb-4"><strong>Fecha de publicación:</strong> {{ book.created }}</p>
+            
+            <h2 class="text-2xl font-semibold mb-2">Descripción:</h2>
+            <p class="text-gray-700">{{ book.description }}</p>
+
+            <div class="mt-6 flex space-x-4">
+                <a href="{% url 'list_book' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Volver a la lista de libros
+                </a>
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'update' book.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Editar
+                </a>
+                <a href="{% url 'delete' book.id %}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Eliminar
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

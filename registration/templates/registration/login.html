@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Iniciar sesión{% endblock %}
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-md">
+    <form action="" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      {% csrf_token %}
+      <h3 class="text-2xl mb-6 text-center font-semibold">Iniciar sesión</h3>
+      {% if form.non_field_errors %}
+        <p class="text-red-500 text-xs italic mb-4">Usuario o contraseña incorrectos, prueba de nuevo.</p>
+      {% endif %}
+      <div class="mb-4">
+        <input type="text" name="username" autofocus maxlength="254" required
+               id="id_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+               placeholder="Nombre de usuario"/>
+      </div>
+      <div class="mb-6">
+        <input type="password" name="password" required
+               id="id_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+               placeholder="Contraseña"/>
+      </div>
+      <div class="flex items-center justify-between">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+          Acceder
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
