@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'books',
-    'autor'
+    'autor',
+    'profiles',
     
 ]
 
@@ -133,7 +134,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = 'list_book'
+#LOGIN_REDIRECT_URL = 'list_book'
 
 LOGOUT_REDIRECT_URL = 'login'
 
@@ -155,7 +156,3 @@ else:
 # Asegúrate de que el directorio para los emails existe
 os.makedirs(EMAIL_FILE_PATH, exist_ok=True)
 
-
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT =os.path.join(BASE_DIR,'media')

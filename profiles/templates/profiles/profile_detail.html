@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ profile.user.username }}{% endblock %}
+{% block content %}
+<style>
+  body {
+    background-color: white;
+  }
+  .profile-avatar {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+  }
+  .profile-info {
+    display: flex;
+    align-items: center;
+  }
+  .profile-details {
+    margin-left: 2rem;
+  }
+</style>
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+        <div class="profile-info">
+          {% if profile.avatar %}
+            <img src="{{ profile.avatar.url }}" class="profile-avatar">
+          {% else %}
+            <img src="{% static 'registration/img/no-avatar.jpg' %}" class="profile-avatar">
+          {% endif %}
+          <div class="profile-details">
+            <h3>{{ profile.user.username }}</h3>
+            {% if profile.bio %}<p>{{ profile.bio }}</p>{% endif %}
+            {% if profile.link %}<p><a href="{{ profile.link }}" target="_blank">{{ profile.link }}</a></p>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

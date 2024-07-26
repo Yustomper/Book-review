@@ -6,23 +6,26 @@
     <h1 class="text-3xl font-bold mb-4">{{ book.title }}</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
+        <div class="flex items-start">
+            <!-- Ajusta el tamaño de la imagen aquí -->
             {% if book.image %}
-                <img src="{{ book.image.url }}" alt="{{ book.title }}" class="w-full h-auto object-cover rounded-lg shadow-lg">
+                <img src="{{ book.image.url }}" alt="{{ book.title }}" class="w-64 h-auto object-cover rounded-lg shadow-lg">
             {% else %}
-                <div class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg">
+                <div class="w-64 h-64 bg-gray-200 flex items-center justify-center rounded-lg">
                     <span class="text-gray-500">No image available</span>
                 </div>
             {% endif %}
         </div>
         
-        <div>
-            <p class="text-xl mb-2"><strong>Autor:</strong> {{ book.autor }}</p>
-            <p class="text-lg mb-2"><strong>Precio:</strong> ${{ book.price }}</p>
-            <p class="text-lg mb-4"><strong>Fecha de publicación:</strong> {{ book.created }}</p>
-            
-            <h2 class="text-2xl font-semibold mb-2">Descripción:</h2>
-            <p class="text-gray-700">{{ book.description }}</p>
+        <div class="flex flex-col justify-between">
+            <div>
+                <p class="text-xl mb-2"><strong>Autor:</strong> {{ book.autor }}</p>
+                <p class="text-lg mb-2"><strong>Precio:</strong> ${{ book.price }}</p>
+                <p class="text-lg mb-4"><strong>Fecha de publicación:</strong> {{ book.created }}</p>
+                
+                <h2 class="text-2xl font-semibold mb-2">Descripción:</h2>
+                <p class="text-gray-700">{{ book.description }}</p>
+            </div>
 
             <div class="mt-6 flex space-x-4">
                 <a href="{% url 'list_book' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -40,6 +43,38 @@
             </div>
         </div>
     </div>
+
+    <!-- Sección de Comentarios -->
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Comentarios</h2>
+        <div class="space-y-4">
+            {% for comment in comments %}
+                <div class="p-4 border border-gray-300 rounded-lg">
+                    <p class="font-semibold">{{ comment.user.username }} <span class="text-yellow-500">({{ comment.rating }} estrella{% if comment.rating > 1 %}s{% endif %})</span></p>
+                    <p class="mt-2">{{ comment.text }}</p>
+                    <p class="text-sm text-gray-500 mt-2">Publicado el {{ comment.created_at }}</p>
+                </div>
+            {% empty %}
+                <p>No hay comentarios aún.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Formulario para agregar un comentario -->
+    {% if user.is_authenticated %}
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Agregar un comentario</h2>
+        <form method="post" action="{% url 'add_comment' book.id %}" class="bg-white p-6 border border-gray-300 rounded-lg shadow-lg">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                Enviar Comentario
+            </button>
+        </form>
+    </div>
+    {% else %}
+        <p class="mt-4">Necesitas <a href="{% url 'login' %}" class="text-blue-500 hover:underline">iniciar sesión</a> para dejar un comentario.</p>
+    {% endif %}
 </div>
 
 {% endblock %}

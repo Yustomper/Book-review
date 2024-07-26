@@ -1,5 +1,6 @@
 from django import forms
-from .models import Book, Autor, Category
+from .models import Book, Category,Comment
+from autor.models import Autor
 
 class BookForm(forms.Form):
     title = forms.CharField(max_length=200, label='Título', widget=forms.TextInput(attrs={'class': 'w-full border border-black p-2 rounded'}))
@@ -19,3 +20,19 @@ class BookForm(forms.Form):
             category=self.cleaned_data['category'],
             price=self.cleaned_data['price']  # Añade el valor del campo price
         )
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text', 'rating']
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'rows': 3,
+                'class': 'w-full p-2 border border-gray-300 rounded-lg',
+                'placeholder': 'Escribe tu comentario aquí...'
+            }),
+            'rating': forms.Select(choices=[(i, f"{i} estrella{'s' if i > 1 else ''}") for i in range(1, 6)], attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-lg'
+            }),
+        }

@@ -1,7 +1,8 @@
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import BookForm
-from .models import Book
+from .forms import BookForm,CommentForm
+from .models import Book,Comment
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -27,7 +28,11 @@ class BookDetailView(generic.DetailView):
     template_name = 'books/book_detail.html'
     context_object_name = 'book'
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = Comment.objects.filter(book=self.object)
+        context['form'] = CommentForm()  # Agrega el formulario al contexto
+        return context
 
 
 class BookUpdateView(LoginRequiredMixin,generic.UpdateView):
@@ -44,3 +49,19 @@ class BookUpdateView(LoginRequiredMixin,generic.UpdateView):
 class BookDeleteView(LoginRequiredMixin,generic.DeleteView):
     model = Book
     success_url = reverse_lazy('list_book')
+
+class CommentCreateView(generic.FormView):
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        book = get_object_or_404(Book, pk=self.kwargs['book_id'])
+        comment = form.save(commit=False)
+        comment.book = book
+        comment.user = self.request.user
+        comment.save()
+        return redirect('book_detail', pk=book.pk)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial']['book'] = get_object_or_404(Book, pk=self.kwargs['book_id'])
+        return kwargs

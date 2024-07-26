@@ -8,25 +8,27 @@
 </head>
 <body>
 
-    <nav class="bg-gray-700 p-4">
+    <nav class="bg-gray-600 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-white text-2xl font-bold">
                 Librería
             </div>
             <div class="space-x-4">
-                <a href="{% url 'list_book' %}" class="text-gray-300 hover:text-white">Inicio</a>
-                <a href="{% url 'list_book' %}" class="text-gray-300 hover:text-white">Libros</a>
+                <a href="{% url 'list_book' %}" class="text-white hover:text-gray-200">Inicio</a>
+                <a href="{% url 'list_book' %}" class="text-white hover:text-gray-200">Libros</a>
             </div>
             {% if not request.user.is_authenticated %}
             <div>
-                <a href="{% url 'login' %}" class="text-gray-300 hover:text-white">Iniciar Sesión</a>
+                <a href="{% url 'login' %}" class="text-white hover:text-gray-200">Iniciar Sesión</a>
             </div>
             {% else %}
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-            
+            <div class="flex items-center space-x-4">
+                <a href="{% url 'profile' %}" class="text-white hover:text-gray-200">Perfil</a>
+                <form action="{% url 'logout' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="text-white hover:text-gray-200">Salir</button>
+                </form>
+            </div>
             {% endif %}
         </div>
     </nav>

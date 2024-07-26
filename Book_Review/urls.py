@@ -23,6 +23,7 @@ urlpatterns = [
     path('books/',include('books.urls'),name='books'),
     path('accounts/',include('django.contrib.auth.urls')),
     path('accounts/',include('registration.urls')),
+    path('profiles/',include('profiles.urls')),
 ]
 if settings.DEBUG:
     from django.conf.urls.static import static

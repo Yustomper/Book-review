@@ -26,6 +26,10 @@
         </button>
       </div>
     </form>
+    <p class="text-right">
+      No tienes una cuenta?, Registrate  <a href="{% url 'signup' %}" class="email-link">aquí</a>.<br>
+      has olvidado tu contraseña?, Haz click  <a href="{% url 'password_reset' %}" class="email-link">aqui.</a>
+    </p>
   </div>
 </div>
 {% endblock %}
