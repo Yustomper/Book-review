@@ -11,7 +11,6 @@ def contact(request):
             name = request.POST.get('name', '')
             email = request.POST.get('email', '')
             content = request.POST.get('content', '')
-            # Enviar correo y redireccionar
             email_message = EmailMessage(
                 "reseñaslibros: Nuevo Mensaje de Contacto",
                 f"De {name} <{email}>\n\nEscribió:\n\n{content}",

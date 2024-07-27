@@ -25,6 +25,8 @@ urlpatterns = [
     path('accounts/',include('registration.urls')),
     path('profiles/',include('profiles.urls')),
     path('contact/',include('contact.urls')),
+    path('autores/',include('autor.urls')),
+    path('search/',include('search.urls'))
 ]
 if settings.DEBUG:
     from django.conf.urls.static import static

@@ -10,6 +10,12 @@ class UserCreationFormWithEmail(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+    def __init__(self, *args, **kwargs):
+        super(UserCreationFormWithEmail, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+            field.widget.attrs['placeholder'] = field.label
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
@@ -22,7 +28,7 @@ class ProfileForm(forms.ModelForm):
         fields = ['avatar', 'bio', 'link']
         widgets = {
             'avatar': forms.ClearableFileInput(attrs={'class': 'form-control-file mt-3 border-black'}),
-            'bio': forms.Textarea(attrs={'class': 'form-control mt-3 border-black', 'rows': 3, 'placeholder': 'Biografia'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control mt-3 border-black', 'rows': 3, 'placeholder': 'Biografía'}),
             'link': forms.URLInput(attrs={'class': 'form-control mt-3 border-black', 'placeholder': 'Enlace'}),
         }
 
@@ -33,6 +39,12 @@ class EmailForm(forms.ModelForm):
         model = User
         fields = ['email']
         
+    def __init__(self, *args, **kwargs):
+        super(EmailForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+            field.widget.attrs['placeholder'] = field.label
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if 'email' in self.changed_data:

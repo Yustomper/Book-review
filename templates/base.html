@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
     <nav class="bg-gray-600 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-white text-2xl font-bold">
@@ -18,7 +17,12 @@
                 <a href="{% url 'list_book' %}" class="text-white hover:text-gray-200">Libros</a>
                 <a href="{% url 'profiles:list' %}" class="text-white hover:text-gray-200">Perfiles</a>
                 <a href="{% url 'contact' %}" class="text-white hover:text-gray-200">Contacto</a>
-                
+            </div>
+            <div>
+                <form action="{% url 'search' %}" method="get" class="flex items-center">
+                    <input type="text" name="q" placeholder="Buscar libros o autores" class="p-2 rounded-l-lg border-0" required>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-r-lg">Buscar</button>
+                </form>
             </div>
             {% if not request.user.is_authenticated %}
             <div>
@@ -36,7 +40,5 @@
         </div>
     </nav>
     {% block content %}{% endblock %}
-    
-    
 </body>
 </html>

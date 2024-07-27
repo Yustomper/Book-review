@@ -16,7 +16,6 @@ class SignupView(generic.CreateView):
 
     def get_form(self, form_class=None):
         form = super(SignupView, self).get_form()
-        # (Tu código existente para estilizar el formulario)
         return form
 
 @method_decorator(login_required, name='dispatch')
@@ -40,7 +39,6 @@ class EmailUpdate(generic.UpdateView):
 
     def get_form(self, form_class=None):
         form = super(EmailUpdate, self).get_form()
-        # (Tu código existente para estilizar el formulario)
         return form
 
 def profile_detail(request, username):

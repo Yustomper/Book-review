@@ -11,14 +11,13 @@ class BookForm(forms.Form):
     price = forms.DecimalField(max_digits=6, decimal_places=2, label='Precio', widget=forms.NumberInput(attrs={'class': 'w-full border border-black p-2 rounded'}))  # Nuevo campo para el precio
 
     def save(self):
-        # Crea un nuevo objeto Book usando los datos validados del formulario
         return Book.objects.create(
             title=self.cleaned_data['title'],
             autor=self.cleaned_data['autor'],
             description=self.cleaned_data['description'],
-            image=self.cleaned_data.get('image'),  # image puede ser None si no se proporciona
+            image=self.cleaned_data.get('image'),  
             category=self.cleaned_data['category'],
-            price=self.cleaned_data['price']  # Añade el valor del campo price
+            price=self.cleaned_data['price'] ,
         )
 
 

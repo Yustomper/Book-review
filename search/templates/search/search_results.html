@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultados de Búsqueda{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-center">Resultados de Búsqueda</h1>
+    
+    {% if books or authors %}
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold">Libros</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for book in books %}
+                    <div class="group relative block overflow-hidden">
+                        {% if book.image %}
+                            <a href="{% url 'book_detail' book.id %}" class="block">
+                                <img src="{{ book.image.url }}" alt="{{ book.title }}" class="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
+                            </a>
+                        {% endif %}
+                        <div class="relative border border-gray-100 bg-white p-4">
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">
+                                <a href="{% url 'book_detail' book.id %}" class="hover:underline">{{ book.title }}</a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-700">${{ book.price }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="text-2xl font-bold">Autores</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for author in authors %}
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img class="w-full h-48 object-cover" src="{{ author.photo.url }}" alt="{{ author.name }}">
+                        <div class="p-6">
+                            <h2 class="text-xl font-bold mb-2">{{ author.name }}</h2>
+                            <p class="text-gray-700 mb-4">{{ author.bio }}</p>
+                            <p class="text-sm text-gray-600 mb-4">Seguidores: {{ author.followers.count }}</p>
+                            {% if user.is_authenticated %}
+                                <form action="{% url 'follow_author' author.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="w-full {% if author in user_following %}bg-red-500 hover:bg-red-600{% else %}bg-blue-500 hover:bg-blue-600{% endif %} text-white font-bold py-2 px-4 rounded">
+                                        {% if author in user_following %}
+                                            Dejar de seguir
+                                        {% else %}
+                                            Seguir
+                                        {% endif %}
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center">No se encontraron resultados.</p>
+    {% endif %}
+</div>
+{% endblock %}

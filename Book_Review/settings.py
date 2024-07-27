@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'autor',
     'contact',
     'profiles',
+    'search'
+    
     
 ]
 

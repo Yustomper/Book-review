@@ -2,11 +2,6 @@
 {% load static %}
 {% block title %}Crear Cuenta{% endblock %}
 {% block content %}
-<style>
-  label {
-    display: none;
-  }
-</style>
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
   <div class="w-full max-w-md">
     <form action="" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -22,15 +17,19 @@
         </div>
       {% endif %}
       <div class="mb-4">
+        <label for="id_username" class="block text-gray-700 text-sm font-bold mb-2">Nombre de usuario</label>
         {{ form.username }}
       </div>
       <div class="mb-4">
+        <label for="id_email" class="block text-gray-700 text-sm font-bold mb-2">Correo electrónico</label>
         {{ form.email }}
       </div>
       <div class="mb-4">
+        <label for="id_password1" class="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
         {{ form.password1 }}
       </div>
       <div class="mb-6">
+        <label for="id_password2" class="block text-gray-700 text-sm font-bold mb-2">Confirmar contraseña</label>
         {{ form.password2 }}
       </div>
       <div class="flex items-center justify-between">
@@ -39,6 +38,9 @@
         </button>
       </div>
     </form>
+    <p class="text-center mt-4">
+      ¿Ya tienes una cuenta? <a href="{% url 'login' %}" class="text-blue-500 hover:underline">Inicia sesión aquí</a>.
+    </p>
   </div>
 </div>
 {% endblock %}
