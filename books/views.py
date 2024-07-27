@@ -7,6 +7,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
+class HomeView(generic.TemplateView):
+    template_name = 'books/home.html'
+
 
 class BookFormView(LoginRequiredMixin,generic.FormView):
     template_name = 'books/add_book.html'

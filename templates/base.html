@@ -14,8 +14,11 @@
                 Librería
             </div>
             <div class="space-x-4">
-                <a href="{% url 'list_book' %}" class="text-white hover:text-gray-200">Inicio</a>
+                <a href="{% url 'home' %}" class="text-white hover:text-gray-200">Inicio</a>
                 <a href="{% url 'list_book' %}" class="text-white hover:text-gray-200">Libros</a>
+                <a href="{% url 'profiles:list' %}" class="text-white hover:text-gray-200">Perfiles</a>
+                <a href="{% url 'contact' %}" class="text-white hover:text-gray-200">Contacto</a>
+                
             </div>
             {% if not request.user.is_authenticated %}
             <div>

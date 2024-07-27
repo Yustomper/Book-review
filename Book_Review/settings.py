@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'books',
     'autor',
+    'contact',
     'profiles',
     
 ]
@@ -139,20 +140,10 @@ LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Email configuration
-if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
-else:
-    # Configurar un email real para producción
-    # Por ejemplo:
-    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    # EMAIL_HOST = 'smtp.tuservidor.com'
-    # EMAIL_PORT = 587
-    # EMAIL_USE_TLS = True
-    # EMAIL_HOST_USER = 'tu@email.com'
-    # EMAIL_HOST_PASSWORD = 'tu_contraseña'
-    pass
-
-# Asegúrate de que el directorio para los emails existe
-os.makedirs(EMAIL_FILE_PATH, exist_ok=True)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_PORT = 2525  
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'e238ed7cc624fd'
+EMAIL_HOST_PASSWORD = '0d0e34a42b4702'
 

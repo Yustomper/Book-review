@@ -7,13 +7,15 @@
     background-color: white;
   }
   .profile-avatar {
-    width: 8rem;
-    height: 8rem;
-    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
   }
   .profile-info {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    padding-left: 2rem;
   }
   .profile-details {
     margin-left: 2rem;
@@ -22,13 +24,15 @@
 <main role="main">
   <div class="container">
     <div class="row mt-3">
-      <div class="col-md-9 mx-auto mb-5">
+      <div class="col-md-10 mx-auto mb-5">
         <div class="profile-info">
-          {% if profile.avatar %}
-            <img src="{{ profile.avatar.url }}" class="profile-avatar">
-          {% else %}
-            <img src="{% static 'registration/img/no-avatar.jpg' %}" class="profile-avatar">
-          {% endif %}
+          <div>
+            {% if profile.avatar %}
+              <img src="{{ profile.avatar.url }}" class="profile-avatar" alt="Avatar de {{ profile.user.username }}">
+            {% else %}
+              <img src="{% static 'registration/img/no-avatar.jpg' %}" class="profile-avatar" alt="Avatar por defecto">
+            {% endif %}
+          </div>
           <div class="profile-details">
             <h3>{{ profile.user.username }}</h3>
             {% if profile.bio %}<p>{{ profile.bio }}</p>{% endif %}

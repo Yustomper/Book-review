@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+<style>
+  .errorlist {
+    color: red;
+  }
+  .form-field {
+    margin-bottom: 1rem;
+  }
+  .form-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  .form-field input, .form-field textarea {
+    border: 1px solid black;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+  }
+</style>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-md">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 class="text-2xl mb-6 text-center font-semibold">
+        <span class="block text-sm mb-2">Envíanos tus dudas</span>
+        Contacto
+      </h2>
+
+      {% if 'ok' in request.GET %}
+        <p class="mb-4 text-green-500 text-sm italic">Su mensaje ha sido enviado correctamente, en breve nos pondremos en contacto con usted.</p>
+      {% elif 'fail' in request.GET %}
+        <p class="mb-4 text-red-500 text-sm italic">No se ha podido enviar el mensaje. Inténtelo de nuevo más tarde.</p>
+      {% endif %}
+
+      <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <div class="form-field">
+          <label for="{{ form.name.id_for_label }}">Nombre *</label>
+          {{ form.name }}
+          {% if form.name.errors %}
+            <p class="text-red-500 text-xs italic">{{ form.name.errors.0 }}</p>
+          {% endif %}
+        </div>
+        <div class="form-field">
+          <label for="{{ form.email.id_for_label }}">Email *</label>
+          {{ form.email }}
+          {% if form.email.errors %}
+            <p class="text-red-500 text-xs italic">{{ form.email.errors.0 }}</p>
+          {% endif %}
+        </div>
+        <div class="form-field">
+          <label for="{{ form.content.id_for_label }}">Mensaje *</label>
+          {{ form.content }}
+          {% if form.content.errors %}
+            <p class="text-red-500 text-xs italic">{{ form.content.errors.0 }}</p>
+          {% endif %}
+        </div>
+        <div class="flex items-center justify-between">
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+            Enviar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
