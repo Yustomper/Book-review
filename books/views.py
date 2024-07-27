@@ -3,15 +3,15 @@ from django.urls import reverse_lazy
 from django.views import generic
 from .forms import BookForm,CommentForm
 from .models import Book,Comment
-from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
 class HomeView(generic.TemplateView):
     template_name = 'books/home.html'
 
-
-class BookFormView(LoginRequiredMixin,generic.FormView):
+@method_decorator(login_required, name='dispatch')
+class BookFormView(generic.FormView):
     template_name = 'books/add_book.html'
     form_class = BookForm
     success_url = reverse_lazy('list_book')
@@ -38,7 +38,8 @@ class BookDetailView(generic.DetailView):
         return context
 
 
-class BookUpdateView(LoginRequiredMixin,generic.UpdateView):
+@method_decorator(login_required, name='dispatch')
+class BookUpdateView(generic.UpdateView):
     model = Book
     fields = ['title','autor','description','image','category','price']
     template_name_suffix = '_update_form'
@@ -49,7 +50,8 @@ class BookUpdateView(LoginRequiredMixin,generic.UpdateView):
 
 
 
-class BookDeleteView(LoginRequiredMixin,generic.DeleteView):
+@method_decorator(login_required, name='dispatch')
+class BookDeleteView(generic.DeleteView):
     model = Book
     success_url = reverse_lazy('list_book')
 
